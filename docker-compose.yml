@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  lb:
+    image: haproxy:1.8.5-alpine
+    ports:
+      - "3000:80"
+    depends_on:
+      - nodes
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+  nodes:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - 9000
+      - 9001
+      - 9002
